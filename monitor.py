@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 from datetime import datetime
 import requests
+import threading
 from parse import *
 
 STATION_ID = 632
@@ -10,6 +11,7 @@ HEADERS = {
 }
 
 def get_departures():
+    threading.Timer(30.0, get_departures).start()
     url = "https://kvb.koeln/qr/%d/" % STATION_ID
     r = requests.get(url, headers=HEADERS)
     soup = BeautifulSoup(r.text)
