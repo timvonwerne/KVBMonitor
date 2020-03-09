@@ -22,7 +22,14 @@ def get_departures():
         (line_id, direction, time) = (tds[0].text, tds[1].text, tds[2].text)
         line_id = line_id.replace(u"\xa0", "")
         direction = direction.replace(u"\xa0", "")
-        time = time.replace(u"\xa0", " ").strip().lower()
+        time = time.replace(u"\xa0", "").strip().lower()
+        if time == "sofort":
+            time = "0"
+        time = time.replace(" min", "")
+        try:
+            time = int(time)
+        except:
+            pass
         try:
             line_id = int(line_id)
         except:
@@ -33,8 +40,9 @@ def get_departures():
                 "direction": direction,
                 "wait_time": time
             })
-    for depart in departures:
-        print('%d \t %s \t %a' %(depart['line_id'], depart['direction'], depart['wait_time']))
-    return departures
-
+    departuresCount = len(departures)
+    print(departuresCount)
+    for i in range(0, departuresCount):
+        print("%a  %b  %c  \n" % (departures[i]['line_id'], departures[i]['direction'], departures[i]['wait_time']))
+    
 get_departures()
