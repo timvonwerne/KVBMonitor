@@ -57,6 +57,7 @@ def print_departures_to_matrix():
     lines = []
     for d in get_departures():
         line = "{0}    {1}    {2}".format(str(d['line_id']), d['direction'], d['wait_time'])
+        print(line)
         graphics.DrawText(canvas, font, pos, 10, textColor, line)
 
 
