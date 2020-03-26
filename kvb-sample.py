@@ -49,13 +49,17 @@ class RunText(SampleBase):
         while True:
             offscreen_canvas.Clear()
 
+            ymargin = 8
+
             for depart in departures:
-                ymargin = 8
+                if(depart['direction'] == "Bocklemünd"): depart['direction'] = "Bockl."
+                if(depart['direction'] == "Rochusplatz"): depart['direction'] = "Roch."
+                
                 connection = "{0} {1} {2}".format(str(depart['line_id']), depart['direction'], depart['wait_time'])    
                 graphics.DrawText(offscreen_canvas, font, 3, ymargin, textColor, connection)
                 ymargin = ymargin + 10
 
-            time.sleep(0.05)
+            time.sleep(30)
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
 
 
