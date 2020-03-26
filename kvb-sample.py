@@ -16,7 +16,7 @@ class RunText(SampleBase):
     def run(self):
         offscreen_canvas = self.matrix.CreateFrameCanvas()
         font = graphics.Font()
-        font.LoadFont("resources/fonts/7x13.bdf")
+        font.LoadFont("resources/fonts/5x8.bdf")
         textColor = graphics.Color(255, 255, 0)
         pos = offscreen_canvas.width
         
@@ -44,18 +44,15 @@ class RunText(SampleBase):
                     "line_id": line_id,
                     "direction": direction,
                     "wait_time": wait_time
-                })
         
-        my_text = "{0}    {1}    {2}".format(str(departures[0]['line_id']), departures[0]['direction'], departures[0]['wait_time'])
-
-        print(my_text)
-
         while True:
             offscreen_canvas.Clear()
-            len = graphics.DrawText(offscreen_canvas, font, pos, 10, textColor, my_text)
-            pos -= 1
-            if (pos + len < 0):
-                pos = offscreen_canvas.width
+
+            for depart in departures:
+                ymargin = 8
+                connection = "{0} {1} {2}".format(str(depart['line_id']), depart['direction'], depart['wait_time'])    
+                graphics.DrawText(offscreen_canvas, font, 3, ymargin, textColor, connection)
+                ymargin = ymargin + 10
 
             time.sleep(0.05)
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
