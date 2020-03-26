@@ -34,7 +34,7 @@ class RunText(SampleBase):
             (line_id, direction, time) = (tds[0].text, tds[1].text, tds[2].text)
             line_id = line_id.replace(u"\xa0", "")
             direction = direction.replace(u"\xa0", "")
-            time = time.replace(u"\xa0", " ").strip().lower()
+            wait_time = wait_time.replace(u"\xa0", " ").strip().lower()
             try:
                 line_id = int(line_id)
             except:
@@ -43,12 +43,12 @@ class RunText(SampleBase):
                 departures.append({
                     "line_id": line_id,
                     "direction": direction,
-                    "wait_time": time
+                    "wait_time": wait_time
                 })
         
-        mytext = departures[0]
+        my_text = "{0}    {1}    {2}".format(str(departures[0]['line_id']), departures[0]['direction'], departures[0]['wait_time'])
 
-        print(mytext)
+        print(my_text)
 
         while True:
             offscreen_canvas.Clear()
