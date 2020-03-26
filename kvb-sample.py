@@ -44,7 +44,8 @@ class RunText(SampleBase):
                     "line_id": line_id,
                     "direction": direction,
                     "wait_time": wait_time
-        
+                })
+                
         while True:
             offscreen_canvas.Clear()
 
