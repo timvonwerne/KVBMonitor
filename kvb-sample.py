@@ -31,7 +31,7 @@ class RunText(SampleBase):
         departures = []
         for row in tables[0].find_all("tr"):
             tds = row.find_all("td")
-            (line_id, direction, time) = (tds[0].text, tds[1].text, tds[2].text)
+            (line_id, direction, wait_time) = (tds[0].text, tds[1].text, tds[2].text)
             line_id = line_id.replace(u"\xa0", "")
             direction = direction.replace(u"\xa0", "")
             wait_time = wait_time.replace(u"\xa0", " ").strip().lower()
@@ -45,7 +45,7 @@ class RunText(SampleBase):
                     "direction": direction,
                     "wait_time": wait_time
                 })
-                
+
         while True:
             offscreen_canvas.Clear()
 
