@@ -13,8 +13,18 @@ class RunText(SampleBase):
         super(RunText, self).__init__(*args, **kwargs)
         self.parser.add_argument("-t", "--text", help="The text to scroll on the RGB LED panel", default="Hello world!")
 
-    def get_departures():
-        url = "https://kvb.koeln/qr/%d/" % int(STATION_ID)
+    def run(self):
+        offscreen_canvas = self.matrix.CreateFrameCanvas()
+        font = graphics.Font()
+        font.LoadFont("resources/fonts/7x13.bdf")
+        textColor = graphics.Color(255, 255, 0)
+        pos = offscreen_canvas.width
+        
+        HEADERS = {
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/537.36"
+        }
+        
+        url = "https://kvb.koeln/qr/632/"
         r = requests.get(url, headers=HEADERS)
         soup = BeautifulSoup(r.text, features="html.parser")
         tables = soup.find_all("table", class_="display")
@@ -35,16 +45,10 @@ class RunText(SampleBase):
                     "direction": direction,
                     "wait_time": time
                 })
-        return departures
-
-    def run(self):
-        offscreen_canvas = self.matrix.CreateFrameCanvas()
-        font = graphics.Font()
-        font.LoadFont("../../../fonts/7x13.bdf")
-        textColor = graphics.Color(255, 255, 0)
-        pos = offscreen_canvas.width
         
-        my_text = self.args.text
+        mytext = departures[0]
+
+        print(mytext)
 
         while True:
             offscreen_canvas.Clear()
