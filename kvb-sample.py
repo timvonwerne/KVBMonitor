@@ -17,7 +17,7 @@ class RunText(SampleBase):
         offscreen_canvas = self.matrix.CreateFrameCanvas()
         font = graphics.Font()
         font.LoadFont("resources/fonts/5x7.bdf")
-        textColor = graphics.Color(255, 255, 0)
+        textColor = graphics.Color(255, 165, 0)
         
         HEADERS = {
             "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/537.36"
@@ -74,7 +74,8 @@ class RunText(SampleBase):
                 graphics.DrawText(offscreen_canvas, font, 2, ymargin, textColor, connection)
                 ymargin = ymargin + 10
 
-            time.sleep(30)
+            offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
+            time.sleep(5)
 
 
 # Main function
