@@ -16,9 +16,8 @@ class RunText(SampleBase):
     def run(self):
         offscreen_canvas = self.matrix.CreateFrameCanvas()
         font = graphics.Font()
-        font.LoadFont("resources/fonts/5x8.bdf")
+        font.LoadFont("resources/fonts/5x7.bdf")
         textColor = graphics.Color(255, 255, 0)
-        pos = offscreen_canvas.width
         
         HEADERS = {
             "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/537.36"
@@ -57,8 +56,8 @@ class RunText(SampleBase):
             now = datetime.datetime.now()
             curr_date = now.strftime("%d.%m.")
             curr_time = now.strftime("%H:%M")
-            graphics.DrawText(offscreen_canvas, font, 3, 8, textColor, curr_date)
-            graphics.DrawText(offscreen_canvas, font, 36, 8, textColor, curr_time)
+            graphics.DrawText(offscreen_canvas, font, 2, 8, textColor, curr_date)
+            graphics.DrawText(offscreen_canvas, font, 37, 8, textColor, curr_time)
             
             # Set y-position of first connection to 16px
             ymargin = 16
@@ -76,7 +75,6 @@ class RunText(SampleBase):
                 ymargin = ymargin + 10
 
             time.sleep(30)
-            offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
 
 
 # Main function
