@@ -1,0 +1,12 @@
+[Unit]
+Description=KVB Abfahrtstafel
+After=network-online.target
+Wants=network-online.target
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/KVBMonitor
+ExecStart=/bin/bash /home/pi/KVBMonitor/service/matrix.sh
+KillSignal=SIGINT
+Restart=on-failure
+[Install]
+WantedBy=default.target
