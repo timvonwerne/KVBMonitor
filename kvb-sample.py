@@ -36,6 +36,7 @@ class RunText(SampleBase):
                 (line_id, direction, wait_time) = (tds[0].text, tds[1].text, tds[2].text)
                 line_id = line_id.replace(u"\xa0", "")
                 direction = direction.replace(u"\xa0", "")
+                if(wait_time == "Sofort"): wait_time = "0 Min"
                 wait_time = wait_time.replace(u" Min", "m").strip()
                 try:
                     line_id = int(line_id)
