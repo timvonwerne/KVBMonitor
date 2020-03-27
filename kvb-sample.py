@@ -49,7 +49,7 @@ class RunText(SampleBase):
                         "direction": direction,
                         "wait_time": wait_time
                     })
-                    
+            soup.decompose()
             offscreen_canvas.Clear()
 
             # Display the current date and time on top
