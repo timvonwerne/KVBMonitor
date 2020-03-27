@@ -39,6 +39,9 @@ class RunText(SampleBase):
                 wait_time = wait_time.replace(u" Min", "m").strip()
                 if(len(wait_time) == 2): wait_time = " {0}".format(wait_time)
 
+                if(wait_time == "4m"): wait_time = "3+1m"
+                if(wait_time == "9m"): wait_time = "09m"
+
                 try:
                     line_id = int(line_id)
                 except:
