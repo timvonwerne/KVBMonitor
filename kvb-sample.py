@@ -60,7 +60,7 @@ class RunText(SampleBase):
             graphics.DrawText(offscreen_canvas, font, 37, 8, textColor, curr_time)
             
             # Set y-position of first connection to 16px
-            ymargin = 16
+            ymargin = 19
 
             print("{0}        {1}".format(curr_date, curr_time))
 
