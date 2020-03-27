@@ -55,10 +55,10 @@ class RunText(SampleBase):
 
             # Display the current date and time on top
             now = datetime.datetime.now()
-            curr_date = now.strftime("%d.%m.%Y")
+            curr_date = now.strftime("%d.%m.")
             curr_time = now.strftime("%H:%M")
-            graphics.DrawText(offscreen_canvas, font, 3, 2, textColor, curr_date)
-            graphics.DrawText(offscreen_canvas, font, 36, 2, textColor, curr_time)
+            graphics.DrawText(offscreen_canvas, font, 3, 8, textColor, curr_date)
+            graphics.DrawText(offscreen_canvas, font, 36, 8, textColor, curr_time)
             
             # Set y-position of first connection to 16px
             ymargin = 16
