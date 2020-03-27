@@ -1,8 +1,8 @@
 #!/bin/bash
 
-brightness=40
-columns=32
-rows=64
+brightness=20
+columns=64
+rows=32
 
 if [ ! $(id -u) -eq 0 ]; then
     echo "Muss als root ausgeführt werden"
