@@ -3,6 +3,7 @@
 from samplebase import SampleBase
 from rgbmatrix import graphics
 import time
+import datetime
 import schedule
 from bs4 import BeautifulSoup
 import requests
@@ -11,7 +12,6 @@ import threading
 class RunText(SampleBase):
     def __init__(self, *args, **kwargs):
         super(RunText, self).__init__(*args, **kwargs)
-        self.parser.add_argument("-t", "--text", help="The text to scroll on the RGB LED panel", default="Hello world!")
 
     def run(self):
         offscreen_canvas = self.matrix.CreateFrameCanvas()
@@ -25,41 +25,52 @@ class RunText(SampleBase):
         }
         
         url = "https://kvb.koeln/qr/632/"
-        r = requests.get(url, headers=HEADERS)
-        soup = BeautifulSoup(r.text, features="html.parser")
-        tables = soup.find_all("table", class_="display")
-        departures = []
-        for row in tables[0].find_all("tr"):
-            tds = row.find_all("td")
-            (line_id, direction, wait_time) = (tds[0].text, tds[1].text, tds[2].text)
-            line_id = line_id.replace(u"\xa0", "")
-            direction = direction.replace(u"\xa0", "")
-            wait_time = wait_time.replace(u"\xa0", " ").strip().lower()
-            try:
-                line_id = int(line_id)
-            except:
-                pass
-            if(direction == "Bocklemünd" or direction == "Rochusplatz"):
-                departures.append({
-                    "line_id": line_id,
-                    "direction": direction,
-                    "wait_time": wait_time
-                })
 
         while True:
+            r = requests.get(url, headers=HEADERS)
+            soup = BeautifulSoup(r.text, features="html.parser")
+            tables = soup.find_all("table", class_="display")
+            departures = []
+            for row in tables[0].find_all("tr"):
+                tds = row.find_all("td")
+                (line_id, direction, wait_time) = (tds[0].text, tds[1].text, tds[2].text)
+                line_id = line_id.replace(u"\xa0", "")
+                direction = direction.replace(u"\xa0", "")
+                wait_time = wait_time.replace(u" Min", "m").strip()
+                try:
+                    line_id = int(line_id)
+                except:
+                    pass
+                if(direction == "Bocklemünd" or direction == "Rochusplatz"):
+                    departures.append({
+                        "line_id": line_id,
+                        "direction": direction,
+                        "wait_time": wait_time
+                    })
+                    
             offscreen_canvas.Clear()
 
-            ymargin = 8
+            # Display the current date and time on top
+            now = datetime.datetime.now()
+            curr_date = now.strftime("%d.%m.%Y")
+            curr_time = now.strftime("%H:%M")
+            graphics.DrawText(offscreen_canvas, font, 3, 2, textColor, curr_date)
+            graphics.DrawText(offscreen_canvas, font, 36, 2, textColor, curr_time)
+            
+            # Set y-position of first connection to 16px
+            ymargin = 16
+
+            print("{0}        {1}".format(curr_date, curr_time))
 
             for depart in departures:
                 if(depart['direction'] == "Bocklemünd"): depart['direction'] = "Bockl."
                 if(depart['direction'] == "Rochusplatz"): depart['direction'] = "Rochu."
-                
                 connection = "{0} {1} {2}".format(str(depart['line_id']), depart['direction'], depart['wait_time'])    
-                graphics.DrawText(offscreen_canvas, font, 3, ymargin, textColor, connection)
+                print(connection)
+                graphics.DrawText(offscreen_canvas, font, 2, ymargin, textColor, connection)
                 ymargin = ymargin + 10
 
-            time.sleep(0.05)
+            time.sleep(30)
             offscreen_canvas = self.matrix.SwapOnVSync(offscreen_canvas)
 
 
