@@ -4,7 +4,7 @@ from samplebase import SampleBase
 from rgbmatrix import graphics
 import time
 import datetime
-import schedule
+from itertools import islice
 from bs4 import BeautifulSoup
 import requests
 import threading
@@ -64,6 +64,8 @@ class RunText(SampleBase):
             ymargin = 16
 
             print("{0}        {1}".format(curr_date, curr_time))
+
+            departures = islice(departures, 2)
 
             for depart in departures:
                 if(depart['direction'] == "Bocklemünd"): depart['direction'] = "Bockl."
