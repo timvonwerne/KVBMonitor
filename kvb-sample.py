@@ -38,6 +38,8 @@ class RunText(SampleBase):
                 direction = direction.replace(u"\xa0", "")
                 if(wait_time == "Sofort"): wait_time = "0 Min"
                 wait_time = wait_time.replace(u" Min", "m").strip()
+                if(len(wait_time) == 2): wait_time = " {0}".format(wait_time)
+
                 try:
                     line_id = int(line_id)
                 except:
